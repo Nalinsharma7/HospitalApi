@@ -1,8 +1,10 @@
 const express = require('express');
 const app = express();
 const port = 8000;
-const db = require('./config/mongoose');
+// const db = require('./config/mongoose');
 const passport = require('passport');
+const mongoose = require('mongoose')
+const {MONGOURI} = require('./keys')
 const passportJWT = require('./config/passport-jwt-strategy');
 
 app.use(
@@ -12,6 +14,18 @@ app.use(
 
 //import or use express router 
 app.use('/', require('./routes/index'));
+
+mongoose.connect(MONGOURI, {
+  useNewUrlParser: true,
+  useUnifiedTopology:true
+})
+
+mongoose.connection.on('connected',()=>{
+  console.log('Connected to mongo')
+})
+mongoose.connection.on('error',(err)=>{
+  console.log('Error in connecting to mongo',err)
+})
 
 
 app.listen(port, function (err) {

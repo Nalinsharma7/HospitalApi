@@ -1,3 +1,3 @@
 module.exports.home = function (req, res) {
-  return res.end('<h1> Expess is up and running</h1>')
+  return res.end('<h1> Welcome to the Hospital API!</h1>')
 }
